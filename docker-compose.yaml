@@ -1,0 +1,43 @@
+version: '3'
+
+networks:
+  mqtt-network:
+    driver: bridge
+
+services:
+   producer:
+     container_name: producer
+     build:
+       context: .
+       dockerfile: examples/producer/Dockerfile
+     networks:
+       - mqtt-network
+     environment:
+       - MQTT_URL=tcp://mqtt_eclipse_mosquitto:1883
+       - MQTT_TOPIC=sampleTopic
+       - PUB_NAME=producer
+
+   mqtt:
+     container_name: mqtt_eclipse_mosquitto
+     image: eclipse-mosquitto
+     networks:
+       - mqtt-network
+     ports:
+       - '1883:1883'
+       - '9001:9001'
+
+   consumer:
+     container_name: consumer
+     restart: on-failure
+     depends_on:
+       - producer
+       - mqtt
+     build:
+       context: .
+       dockerfile: examples/consumer/Dockerfile
+     networks:
+       - mqtt-network
+     environment:
+       - MQTT_URL=tcp://mqtt_eclipse_mosquitto:1883
+       - MQTT_TOPIC=sampleTopic
+       - MQTT_CLIENT_ID=consumer
