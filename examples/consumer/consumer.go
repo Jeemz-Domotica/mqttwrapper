@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Jeemz-Domotica/mqttController"
+	"github.com/Jeemz-Domotica/mqttwrapper"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"time"
 )
@@ -10,14 +10,14 @@ import (
 // Consumer that prints consumed messages indefinitely
 func main() {
 	// Wait for the duration of the grace period
-	time.Sleep(mqttController.GracePeriod)
+	time.Sleep(mqttwrapper.GracePeriod)
 
 	// Get mqtt URI and topic
-	uri := mqttController.GetUri()
-	topic := mqttController.GetTopic()
+	uri := mqttwrapper.GetUri()
+	topic := mqttwrapper.GetTopic()
 
 	// Create new subscriber client
-	client := *mqttController.CreateClient("sub", uri)
+	client := *mqttwrapper.CreateClient("sub", uri)
 
 	// Subscribe to MQTT and print consumed messages
 	client.Subscribe(topic, 0, func(client mqtt.Client, msg mqtt.Message) {

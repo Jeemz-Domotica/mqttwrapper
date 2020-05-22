@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Jeemz-Domotica/mqttController"
+	"github.com/Jeemz-Domotica/mqttwrapper"
 	"os"
 	"time"
 )
@@ -10,15 +10,15 @@ import (
 // Sample producer that produces a PING every 10 seconds.
 func main() {
 	// Wait a couple of seconds to ensure MQTT is initialized.
-	time.Sleep(mqttController.GracePeriod)
+	time.Sleep(mqttwrapper.GracePeriod)
 
 	// Get URL and topic of MQTT.
-	uri := mqttController.GetUri()
-	topic := mqttController.GetTopic()
+	uri := mqttwrapper.GetUri()
+	topic := mqttwrapper.GetTopic()
 	producerName := os.Getenv(`PUB_NAME`)
 
 	// Create MQTT client.
-	client := *mqttController.CreateClient(producerName, uri)
+	client := *mqttwrapper.CreateClient(producerName, uri)
 
 	// Publish message every 10 seconds.
 	timer := time.NewTicker(10 * time.Second)
