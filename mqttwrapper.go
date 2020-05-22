@@ -1,4 +1,4 @@
-package mqttcontroller
+package mqttwrapper
 
 import (
 	"fmt"

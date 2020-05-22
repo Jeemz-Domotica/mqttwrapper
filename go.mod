@@ -1,4 +1,4 @@
-module github.com/Jeemz-Domotica/mqttcontroller
+module github.com/Jeemz-Domotica/mqttwrapper
 
 go 1.14
 
